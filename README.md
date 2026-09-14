@@ -1,2 +1,6 @@
 # Grupo_20
-Grupo 20: Florencia, Vanina y Adriana. TP Contruccion de aplicaciones informaticas
+TP Contruccion de aplicaciones informaticas
+Grupo 20: 
+882586 - Vargas Vanina Cynthia
+892718 - Giannini Florencia
+854587 - Murua Adriana
