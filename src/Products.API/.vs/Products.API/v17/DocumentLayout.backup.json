@@ -1,0 +1,262 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\products.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:products.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\dtos\\productrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:dtos\\productrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\dtos\\productresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:dtos\\productresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\exceptions\\validationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:exceptions\\validationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\exceptions\\notfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:exceptions\\notfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\persistence\\inmemoryproductrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:persistence\\inmemoryproductrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\persistence\\iproductrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:persistence\\iproductrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\services\\iproductservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:services\\iproductservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\services\\requestvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:services\\requestvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|c:\\users\\potis\\desktop\\grupo_20\\src\\products.api\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BF0CAB9-303B-F94E-98A6-1DB9252C3747}|Products.API.csproj|solutionrelative:weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Products.API",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
+              "RelativeDocumentMoniker": "Products.API.csproj",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
+              "RelativeToolTip": "Products.API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-04T06:49:53.737Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProductsController.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Controllers\\ProductsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProductsController.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Controllers\\ProductsController.cs",
+              "RelativeToolTip": "Controllers\\ProductsController.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwCsAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:47:52.592Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "Controllers\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:47:48.623Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProductRequest.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\DTOs\\ProductRequest.cs",
+              "RelativeDocumentMoniker": "DTOs\\ProductRequest.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\DTOs\\ProductRequest.cs",
+              "RelativeToolTip": "DTOs\\ProductRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:46:40.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProductResponse.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\DTOs\\ProductResponse.cs",
+              "RelativeDocumentMoniker": "DTOs\\ProductResponse.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\DTOs\\ProductResponse.cs",
+              "RelativeToolTip": "DTOs\\ProductResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:46:37.357Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "NotFoundException.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Exceptions\\NotFoundException.cs",
+              "RelativeDocumentMoniker": "Exceptions\\NotFoundException.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Exceptions\\NotFoundException.cs",
+              "RelativeToolTip": "Exceptions\\NotFoundException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:46:15.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ValidationException.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Exceptions\\ValidationException.cs",
+              "RelativeDocumentMoniker": "Exceptions\\ValidationException.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Exceptions\\ValidationException.cs",
+              "RelativeToolTip": "Exceptions\\ValidationException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:46:06.449Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Product.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "Models\\Product.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Models\\Product.cs",
+              "RelativeToolTip": "Models\\Product.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:44:23.814Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "InMemoryProductRepository.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Persistence\\InMemoryProductRepository.cs",
+              "RelativeDocumentMoniker": "Persistence\\InMemoryProductRepository.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Persistence\\InMemoryProductRepository.cs",
+              "RelativeToolTip": "Persistence\\InMemoryProductRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:44:15.997Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IProductRepository.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Persistence\\IProductRepository.cs",
+              "RelativeDocumentMoniker": "Persistence\\IProductRepository.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Persistence\\IProductRepository.cs",
+              "RelativeToolTip": "Persistence\\IProductRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:44:12.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IProductService.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Services\\IProductService.cs",
+              "RelativeDocumentMoniker": "Services\\IProductService.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Services\\IProductService.cs",
+              "RelativeToolTip": "Services\\IProductService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:43:55.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "RequestValidator.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Services\\RequestValidator.cs",
+              "RelativeDocumentMoniker": "Services\\RequestValidator.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Services\\RequestValidator.cs",
+              "RelativeToolTip": "Services\\RequestValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:43:32.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "WeatherForecast.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\WeatherForecast.cs",
+              "RelativeToolTip": "WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T06:43:27.371Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Services\\ProductService.cs",
+              "RelativeDocumentMoniker": "Services\\ProductService.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Services\\ProductService.cs",
+              "RelativeToolTip": "Services\\ProductService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFMAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T05:13:22.102Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
