@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "jE/NUYLKEog=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\potis\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
+    "C:\\Users\\potis\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
