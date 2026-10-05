@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cart.API</name>
+    </assembly>
+    <members>
+        <member name="T:Cart.API.DTOs.AddCartItemRequest">
+            <summary>
+            Cuerpo del POST /api/cart/{userId}/items.
+            La cantidad NO lleva [Range] a propósito: una cantidad menor o igual a 0 debe
+            devolver el código CRT-004, y eso lo valida la capa de servicios.
+            </summary>
+        </member>
+        <member name="P:Cart.API.DTOs.AddCartItemRequest.ProductoId">
+            <summary>Producto a agregar.</summary>
+        </member>
+        <member name="P:Cart.API.DTOs.AddCartItemRequest.Cantidad">
+            <summary>Cantidad a agregar (mayor a 0).</summary>
+        </member>
+        <member name="T:Cart.API.DTOs.CartResponse">
+            <summary>
+            Carrito de un usuario tal como lo devuelve la API.
+            </summary>
+        </member>
+        <member name="T:Cart.API.DTOs.UpdateCartItemRequest">
+            <summary>
+            Cuerpo del PUT /api/cart/{userId}/items/{productId}.
+            </summary>
+        </member>
+        <member name="P:Cart.API.DTOs.UpdateCartItemRequest.Cantidad">
+            <summary>Nueva cantidad (mayor a 0).</summary>
+        </member>
+        <member name="T:Cart.API.Exceptions.ErrorCodes">
+            <summary>
+            Catálogo de códigos de error de Cart.API.
+            </summary>
+        </member>
+        <member name="F:Cart.API.Exceptions.ErrorCodes.CRT_001">
+            <summary>404 - El usuario no tiene un carrito activo.</summary>
+        </member>
+        <member name="F:Cart.API.Exceptions.ErrorCodes.CRT_002">
+            <summary>404 - El producto no existe en Products.API.</summary>
+        </member>
+        <member name="F:Cart.API.Exceptions.ErrorCodes.CRT_003">
+            <summary>422 - La cantidad supera el stock disponible.</summary>
+        </member>
+        <member name="F:Cart.API.Exceptions.ErrorCodes.CRT_004">
+            <summary>400 - Cantidad inválida (menor o igual a cero).</summary>
+        </member>
+        <member name="F:Cart.API.Exceptions.ErrorCodes.CRT_005">
+            <summary>500 - Error interno inesperado.</summary>
+        </member>
+        <member name="T:Cart.API.Models.CartItem">
+            <summary>
+            Producto dentro del carrito, con su cantidad.
+            </summary>
+        </member>
+        <member name="P:Cart.API.Models.CartItem.ProductoId">
+            <summary>Producto referenciado (vive en Products.API).</summary>
+        </member>
+        <member name="P:Cart.API.Models.CartItem.Cantidad">
+            <summary>Cantidad, mayor a 0.</summary>
+        </member>
+        <member name="T:Cart.API.Models.ShoppingCart">
+            <summary>
+            Carrito de compras de un usuario. Cada usuario tiene como máximo un carrito.
+            La clase se llama ShoppingCart (y no Cart) porque el namespace raíz del proyecto
+            ya es "Cart" y el compilador se confundiría entre el namespace y la clase.
+            </summary>
+        </member>
+        <member name="P:Cart.API.Models.ShoppingCart.UsuarioId">
+            <summary>Usuario dueño del carrito (vive en Users.API). Es la clave del carrito.</summary>
+        </member>
+        <member name="P:Cart.API.Models.ShoppingCart.FechaActualizacion">
+            <summary>Se actualiza automáticamente en cada operación sobre el carrito.</summary>
+        </member>
+        <member name="T:Program">
+            <summary>
+            Auto-generated public partial Program class for top-level statement apps.
+            </summary>
+        </member>
+    </members>
+</doc>
