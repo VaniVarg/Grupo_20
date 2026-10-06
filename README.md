@@ -1,11 +1,5 @@
 # Grupo_20
-<<<<<<< Updated upstream
-TP Contrucción de Aplicaciones Informaticas
-Grupo 20: 
-882586 Vargas Vanina Cynthia -
-892718 Giannini Florencia -
 892376 Noelia Ajnota
-=======
 
 # E-Commerce — Arquitectura de Microservicios
 
@@ -118,6 +112,7 @@ estándar de Problem Details (`type`, `title`, `status`, `detail`, `instance`).
 | CRT-005 | 500 | Error interno al procesar el carrito |
 | NTF-001 | 404 | Usuario destinatario no encontrado |
 | NTF-002 | 400 | Datos de la notificación inválidos |
-| NTF-003 | 404 | No se encontraron notificaciones para el usuario |
+| NTF-003 | 404 | No se encon
+
+traron notificaciones para el usuario |
 | NTF-004 | 500 | Error interno al procesar la notificación |
->>>>>>> Stashed changes
