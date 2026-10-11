@@ -1,4 +1,6 @@
-# Grupo_20
+# Grupo_20 Integrantes
+882586 Vargas Vanina Cynthia
+892718 Giannini Florencia 
 892376 Noelia Ajnota
 
 # E-Commerce — Arquitectura de Microservicios
@@ -6,12 +8,6 @@
 Trabajo práctico grupal de Arquitectura y Diseño de Software.
 Sistema de e-commerce dividido en cinco microservicios REST, cada uno con su propia
 responsabilidad, desarrollado en C# con .NET 10.
-
-# Integrantes
-
-882586 Vargas Vanina Cynthia
-892718 Giannini Florencia 
-892376 Ajnota Noelia
 
 # Servicios y puertos
 
@@ -112,7 +108,5 @@ estándar de Problem Details (`type`, `title`, `status`, `detail`, `instance`).
 | CRT-005 | 500 | Error interno al procesar el carrito |
 | NTF-001 | 404 | Usuario destinatario no encontrado |
 | NTF-002 | 400 | Datos de la notificación inválidos |
-| NTF-003 | 404 | No se encon
-
-traron notificaciones para el usuario |
+| NTF-003 | 404 | No se encontraron notificaciones para el usuario |
 | NTF-004 | 500 | Error interno al procesar la notificación |
