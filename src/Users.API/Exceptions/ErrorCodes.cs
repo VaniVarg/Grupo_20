@@ -22,4 +22,10 @@ public static class ErrorCodes
 
     /// <summary>500 - Error interno inesperado.</summary>
     public const string USR_006 = "USR-006";
+
+    /// <summary>
+    /// 404 - Usuario no encontrado. NO está en el catálogo de la consigna: lo agregamos porque
+    /// Orders.API y Notifications.API necesitan consultar si un usuario existe (GET /api/users/{id}).
+    /// </summary>
+    public const string USR_007 = "USR-007";
 }

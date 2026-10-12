@@ -1,0 +1,15 @@
+﻿@host = http://localhost:5102
+
+### Registrar usuario
+POST {{host}}/api/users/register
+Content-Type: application/json
+
+{
+  "nombre": "María",
+  "apellido": "González",
+  "email": "maria@email.com",
+  "password": "MiPassword123!"
+}
+
+### Obtener usuario por ID (reemplazar por el ID devuelto)
+GET {{host}}/api/users/a1b2c3d4-0000-0000-0000-111122223333
