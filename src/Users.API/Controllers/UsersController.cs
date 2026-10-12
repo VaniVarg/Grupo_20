@@ -5,7 +5,7 @@ using Users.API.Services;
 namespace Users.API.Controllers;
 
 /// <summary>
-/// Registro y consulta de usuarios.
+/// Registro, login y consulta de usuarios.
 /// </summary>
 [ApiController]
 [Route("api/users")]
@@ -18,6 +18,13 @@ public class UsersController(IUserService service) : ControllerBase
     {
         var created = await service.RegisterAsync(request);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+    }
+
+    /// <summary>Autentica a un usuario con email y contraseña.</summary>
+    [HttpPost("login")]
+    public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
+    {
+        return Ok(await service.LoginAsync(request));
     }
 
     /// <summary>
