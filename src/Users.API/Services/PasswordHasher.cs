@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 
 namespace Users.API.Services;
 
@@ -18,7 +18,7 @@ public static class PasswordHasher
         var salt = RandomNumberGenerator.GetBytes(SaltSize);
         var key = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, HashAlgorithmName.SHA256, KeySize);
 
-        return $"$Iterations.$Convert.ToBase64String(salt).$Convert.ToBase64String(key)";
+        return $"{Iterations}.{Convert.ToBase64String(salt)}.{Convert.ToBase64String(key)}";
     }
 
     /// <summary>Compara una contraseña ingresada contra el hash guardado.</summary>

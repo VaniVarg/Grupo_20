@@ -1,4 +1,4 @@
-﻿using Users.API.Exceptions;
+using Users.API.Exceptions;
 using DataAnnotations = System.ComponentModel.DataAnnotations;
 
 namespace Users.API.Services;
@@ -22,6 +22,6 @@ public static class RequestValidator
             return;
 
         var detalle = string.Join("; ", results.Select(r => r.ErrorMessage));
-        throw new ValidationException(errorCode, $"$defaultMessage $detalle");
+        throw new ValidationException(errorCode, $"{defaultMessage} {detalle}");
     }
 }
