@@ -1,7 +1,11 @@
 {
   "version": 2,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   "dgSpecHash": "jE/NUYLKEog=",
+=======
+  "dgSpecHash": "V6CMGKny7tU=",
+>>>>>>> Stashed changes
   "success": true,
   "projectFilePath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
   "expectedPackageFiles": [
