@@ -52,7 +52,15 @@
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
+<<<<<<< Updated upstream
               "version": "[9.0.1, )"
+=======
+              "version": "[10.0.0, )"
+            },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[3.10.2, )"
+>>>>>>> Stashed changes
             }
           },
           "imports": [

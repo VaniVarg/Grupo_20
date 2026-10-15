@@ -21,7 +21,11 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+<<<<<<< Updated upstream
       "Microsoft.OpenApi/1.6.17": {
+=======
+      "Microsoft.OpenApi/3.10.2": {
+>>>>>>> Stashed changes
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
@@ -53,10 +57,17 @@
         "microsoft.aspnetcore.openapi.nuspec"
       ]
     },
+<<<<<<< Updated upstream
     "Microsoft.OpenApi/1.6.17": {
       "sha512": "Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA==",
       "type": "package",
       "path": "microsoft.openapi/1.6.17",
+=======
+    "Microsoft.OpenApi/3.10.2": {
+      "sha512": "qzg4a3WmgQm28Azaporbnsu+KHA+vq5sgpQQFLiJgB06Rra2S+kzGAU7pzUB8/UIwZJCSCY2JEE/M5e0hQ2K8w==",
+      "type": "package",
+      "path": "microsoft.openapi/3.10.2",
+>>>>>>> Stashed changes
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -64,14 +75,24 @@
         "lib/netstandard2.0/Microsoft.OpenApi.dll",
         "lib/netstandard2.0/Microsoft.OpenApi.pdb",
         "lib/netstandard2.0/Microsoft.OpenApi.xml",
+<<<<<<< Updated upstream
         "microsoft.openapi.1.6.17.nupkg.sha512",
+=======
+        "microsoft.openapi.3.10.2.nupkg.sha512",
+>>>>>>> Stashed changes
         "microsoft.openapi.nuspec"
       ]
     }
   },
   "projectFileDependencyGroups": {
+<<<<<<< Updated upstream
     "net9.0": [
       "Microsoft.AspNetCore.OpenApi >= 9.0.1"
+=======
+    "net10.0": [
+      "Microsoft.AspNetCore.OpenApi >= 10.0.0",
+      "Microsoft.OpenApi >= 3.10.2"
+>>>>>>> Stashed changes
     ]
   },
   "packageFolders": {
@@ -126,7 +147,15 @@
         "dependencies": {
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
+<<<<<<< Updated upstream
             "version": "[9.0.1, )"
+=======
+            "version": "[10.0.0, )"
+          },
+          "Microsoft.OpenApi": {
+            "target": "Package",
+            "version": "[3.10.2, )"
+>>>>>>> Stashed changes
           }
         },
         "imports": [

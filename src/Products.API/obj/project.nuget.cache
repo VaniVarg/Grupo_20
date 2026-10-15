@@ -1,11 +1,20 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
   "dgSpecHash": "jE/NUYLKEog=",
   "success": true,
   "projectFilePath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\potis\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
     "C:\\Users\\potis\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+=======
+  "dgSpecHash": "Qv3S5L0Efgs=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\potis\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
+    "C:\\Users\\potis\\.nuget\\packages\\microsoft.openapi\\3.10.2\\microsoft.openapi.3.10.2.nupkg.sha512"
+>>>>>>> Stashed changes
   ],
   "logs": []
 }

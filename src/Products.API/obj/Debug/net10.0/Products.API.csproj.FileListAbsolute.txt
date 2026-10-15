@@ -1,0 +1,9 @@
+C:\Users\potis\Desktop\Grupo_20\src\Products.API\obj\Debug\net10.0\Products.API.csproj.AssemblyReference.cache
+C:\Users\potis\Desktop\Grupo_20\src\Products.API\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\potis\Desktop\Grupo_20\src\Products.API\obj\Debug\net10.0\Products.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\potis\Desktop\Grupo_20\src\Products.API\obj\Debug\net10.0\Products.API.AssemblyInfoInputs.cache
+C:\Users\potis\Desktop\Grupo_20\src\Products.API\obj\Debug\net10.0\Products.API.AssemblyInfo.cs
+C:\Users\potis\Desktop\Grupo_20\src\Products.API\obj\Debug\net10.0\Products.API.csproj.CoreCompileInputs.cache
+C:\Users\potis\Desktop\Grupo_20\src\Products.API\obj\Debug\net10.0\Products.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\potis\Desktop\Grupo_20\src\Products.API\obj\Debug\net10.0\Products.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\potis\Desktop\Grupo_20\src\Products.API\obj\Debug\net10.0\Products.API.sourcelink.json
