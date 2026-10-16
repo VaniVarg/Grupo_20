@@ -1,0 +1,33 @@
+﻿@host = http://localhost:5102
+
+### Registrar usuario
+POST {{host}}/api/users/register
+Content-Type: application/json
+
+{
+  "nombre": "María",
+  "apellido": "González",
+  "email": "maria@email.com",
+  "password": "MiPassword123!"
+}
+
+### Login correcto
+POST {{host}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "maria@email.com",
+  "password": "MiPassword123!"
+}
+
+### Login con contraseña incorrecta (repetir 3 veces para bloquear la cuenta)
+POST {{host}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "maria@email.com",
+  "password": "incorrecta"
+}
+
+### Ver el usuario: "activo" pasa a false al tercer intento fallido (reemplazar el ID)
+GET {{host}}/api/users/a1b2c3d4-0000-0000-0000-111122223333

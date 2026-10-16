@@ -1,24 +1,24 @@
 {
   "version": 2,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  "dgSpecHash": "jE/NUYLKEog=",
-=======
-  "dgSpecHash": "V6CMGKny7tU=",
->>>>>>> Stashed changes
-  "success": true,
-  "projectFilePath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\potis\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
-    "C:\\Users\\potis\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
-=======
-  "dgSpecHash": "Qv3S5L0Efgs=",
+  "dgSpecHash": "d9hRZrwac9I=",
   "success": true,
   "projectFilePath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\potis\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
-    "C:\\Users\\potis\\.nuget\\packages\\microsoft.openapi\\3.10.2\\microsoft.openapi.3.10.2.nupkg.sha512"
->>>>>>> Stashed changes
+    "C:\\Users\\potis\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "El paquete \"Microsoft.OpenApi\" 2.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
+      "projectPath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Products.API\\Products.API.csproj",
+      "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }
