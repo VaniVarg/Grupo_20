@@ -25,4 +25,28 @@ public class CartController(ICartService service) : ControllerBase
     {
         return Ok(await service.AddItemAsync(userId, request));
     }
+
+    /// <summary>Actualiza la cantidad de un producto del carrito.</summary>
+    [HttpPut("{userId}/items/{productId}")]
+    public async Task<ActionResult<CartResponse>> UpdateItem(
+        Guid userId, Guid productId, [FromBody] UpdateCartItemRequest request)
+    {
+        return Ok(await service.UpdateItemAsync(userId, productId, request));
+    }
+
+    /// <summary>Quita un producto del carrito.</summary>
+    [HttpDelete("{userId}/items/{productId}")]
+    public async Task<IActionResult> RemoveItem(Guid userId, Guid productId)
+    {
+        await service.RemoveItemAsync(userId, productId);
+        return NoContent();
+    }
+
+    /// <summary>Vacía el carrito completo.</summary>
+    [HttpDelete("{userId}")]
+    public async Task<IActionResult> ClearCart(Guid userId)
+    {
+        await service.ClearCartAsync(userId);
+        return NoContent();
+    }
 }

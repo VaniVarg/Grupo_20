@@ -1,15 +1,29 @@
 @host = http://localhost:5104
 @userId = a1b2c3d4-0000-0000-0000-111122223333
+@productId = REEMPLAZAR-POR-UN-ID-DE-PRODUCTO-REAL
 
 ### Agregar un producto al carrito
 POST {{host}}/api/cart/{{userId}}/items
 Content-Type: application/json
 
 {
-  "productoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "productoId": "{{productId}}",
   "cantidad": 2
 }
 
 ### Ver el carrito
 GET {{host}}/api/cart/{{userId}}
-```
+
+### Cambiar la cantidad de un producto
+PUT {{host}}/api/cart/{{userId}}/items/{{productId}}
+Content-Type: application/json
+
+{
+  "cantidad": 4
+}
+
+### Quitar un producto del carrito
+DELETE {{host}}/api/cart/{{userId}}/items/{{productId}}
+
+### Vaciar el carrito
+DELETE {{host}}/api/cart/{{userId}}
