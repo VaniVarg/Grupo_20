@@ -1,3 +1,4 @@
+using Cart.API.Clients;
 using Cart.API.DTOs;
 using Cart.API.Exceptions;
 using Cart.API.Models;
@@ -5,7 +6,7 @@ using Cart.API.Persistence;
 
 namespace Cart.API.Services;
 
-public class CartService(ICartRepository repository) : ICartService
+public class CartService(ICartRepository repository, IProductsClient productsClient) : ICartService
 {
     public async Task<CartResponse> GetCartAsync(Guid userId)
     {
@@ -28,8 +29,8 @@ public class CartService(ICartRepository repository) : ICartService
 
         var item = cart.Items.FirstOrDefault(i => i.ProductoId == request.ProductoId);
 
-        // TODO (19/10): consultar a Products.API para validar que el producto existe
-        // (CRT-002) y que hay stock suficiente (CRT-003).
+        // El stock se compara contra lo que YA había en el carrito más lo que se agrega.
+        await EnsureProductAndStockAsync(request.ProductoId, (item?.Cantidad ?? 0) + request.Cantidad);
 
         if (item is null)
             cart.Items.Add(new CartItem { ProductoId = request.ProductoId, Cantidad = request.Cantidad });
@@ -50,7 +51,8 @@ public class CartService(ICartRepository repository) : ICartService
         var cart = await GetCartOrThrowAsync(userId);
         var item = GetItemOrThrow(cart, productId);
 
-        // TODO (19/10): validar el stock contra Products.API (CRT-003).
+        // Acá la cantidad REEMPLAZA a la anterior, por eso se compara directamente.
+        await EnsureProductAndStockAsync(productId, request.Cantidad);
 
         item.Cantidad = request.Cantidad;
         cart.FechaActualizacion = DateTime.UtcNow;
@@ -85,6 +87,23 @@ public class CartService(ICartRepository repository) : ICartService
     {
         return cart.Items.FirstOrDefault(i => i.ProductoId == productId)
             ?? throw new NotFoundException(ErrorCodes.CRT_001, "El producto no está en el carrito.");
+    }
+
+    /// <summary>
+    /// Consulta a Products.API: el producto tiene que existir (CRT-002) y su stock tiene
+    /// que alcanzar para la cantidad pedida (CRT-003).
+    /// </summary>
+    private async Task EnsureProductAndStockAsync(Guid productId, int cantidadTotal)
+    {
+        var product = await productsClient.GetProductAsync(productId)
+            ?? throw new NotFoundException(ErrorCodes.CRT_002, "Producto no encontrado.");
+
+        if (product.Stock < cantidadTotal)
+        {
+            throw new BusinessRuleException(
+                ErrorCodes.CRT_003,
+                $"Stock insuficiente. Disponible: {product.Stock}, solicitado: {cantidadTotal}.");
+        }
     }
 
     private static CartResponse ToResponse(ShoppingCart cart) => new()
