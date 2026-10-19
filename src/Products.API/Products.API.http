@@ -1,6 +1,16 @@
-@Products.API_HostAddress = http://localhost:5115
+@host = http://localhost:5101
 
-GET {{Products.API_HostAddress}}/weatherforecast/
-Accept: application/json
+### Crear producto (para tener stock y probar ordenes)
+POST {{host}}/api/products
+Content-Type: application/json
 
-###
+{
+  "nombre": "Teclado Mecanico",
+  "descripcion": "Teclado RGB",
+  "precio": 1500.50,
+  "stock": 10,
+  "categoria": "Perifericos"
+}
+
+### Listar productos
+GET {{host}}/api/products
