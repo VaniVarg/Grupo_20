@@ -27,3 +27,12 @@ DELETE {{host}}/api/cart/{{userId}}/items/{{productId}}
 
 ### Vaciar el carrito
 DELETE {{host}}/api/cart/{{userId}}
+
+### Stock insuficiente: pedir más unidades que el stock del producto (CRT-003)
+POST {{host}}/api/cart/{{userId}}/items
+Content-Type: application/json
+
+{
+  "productoId": "{{productId}}",
+  "cantidad": 9999
+}
