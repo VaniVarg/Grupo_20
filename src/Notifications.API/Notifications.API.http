@@ -1,0 +1,15 @@
+@host = http://localhost:5105
+@userId = REEMPLAZAR-POR-UN-ID-DE-USUARIO-REAL
+
+### Enviar notificación (el usuario tiene que existir en Users.API)
+POST {{host}}/api/notifications/send
+Content-Type: application/json
+
+{
+  "usuarioId": "{{userId}}",
+  "mensaje": "Su orden fue confirmada.",
+  "tipo": "Push"
+}
+
+### Listar notificaciones de un usuario
+GET {{host}}/api/notifications/{{userId}}

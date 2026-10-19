@@ -1,30 +1,83 @@
 using Products.API.ExceptionHandlers;
 using Products.API.Persistence;
 using Products.API.Services;
+using Serilog;
+using Serilog.Context;
+using Serilog.Events;
+using Serilog.Formatting.Json;
 
-var builder = WebApplication.CreateBuilder(args);
+// Serilog se configura ANTES que cualquier otra cosa, así se registra también el arranque.
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    // Silenciamos el ruido interno del framework, pero dejamos ver el puerto en el que escucha.
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+    .Enrich.FromLogContext()                          // incluye las propiedades que agregamos por request
+    .Enrich.WithProperty("Service", "Products.API")   // en cada log va el nombre del servicio
+                                                      // Consola: formato legible para humanos.
+    .WriteTo.Console(outputTemplate:
+        "[{Timestamp:HH:mm:ss} {Level:u3}] [{Service}] {Message:lj}{NewLine}{Exception}")
+    // Archivo: un JSON por evento, con TODAS las propiedades (Service, Endpoint, ErrorCode...).
+    // Se crea un archivo por día en la carpeta logs/.
+    .WriteTo.File(new JsonFormatter(renderMessage: true), "logs/products-.log",
+        rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
-builder.Services
-    .AddControllers()
-  //Desactivamos el 400 automático de [ApiController]: la validación la hacemos en la capa de servicios para poder devolver el errorCode PRD-002.
-    .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
 
-// Repositorio en memoria (temporal). Es Singleton para que los datos vivan mientras el servidor esté encendido.
-builder.Services.AddSingleton<IProductRepository, InMemoryProductRepository>();
-builder.Services.AddScoped<IProductService, ProductService>();
+    // Le decimos a ASP.NET que use Serilog: todos los ILogger<T> pasan a escribir por acá.
+    builder.Host.UseSerilog();
 
-// Manejo global de errores. El framework prueba los handlers EN ESTE ORDEN y usa el primero que devuelva true: los específicos van primero y el genérico, último.
-builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
-builder.Services.AddExceptionHandler<BusinessRuleExceptionHandler>();
-builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails();
+    builder.Services
+        .AddControllers()
+        // Desactivamos el 400 automático de [ApiController]: la validación la hacemos
+        // en la capa de servicios para poder devolver el errorCode PRD-002.
+        .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 
-var app = builder.Build();
+    builder.Services.AddSingleton<IProductRepository, InMemoryProductRepository>();
+    builder.Services.AddScoped<IProductService, ProductService>();
 
-// Activa los handlers.
-app.UseExceptionHandler();
+    builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+    builder.Services.AddExceptionHandler<BusinessRuleExceptionHandler>();
+    builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
+    builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+    builder.Services.AddProblemDetails();
 
-app.MapControllers();
+    var app = builder.Build();
 
-app.Run();
+    // Inicio de cada request: agrega el endpoint a TODOS los logs del request y registra el comienzo.
+    app.Use(async (context, next) =>
+    {
+        var endpoint = $"{context.Request.Method} {context.Request.Path}";
+
+        using (LogContext.PushProperty("Endpoint", endpoint))
+        {
+            Log.Information("Inicio {Endpoint}", endpoint);
+            await next();
+        }
+    });
+
+    // Fin de cada request, con el status y la duración. Va después del middleware anterior
+    // para que este log también lleve la propiedad Endpoint.
+    app.UseSerilogRequestLogging(options =>
+    {
+        options.MessageTemplate = "Fin {RequestMethod} {RequestPath} => {StatusCode} en {Elapsed:0.0} ms";
+    });
+
+    app.UseExceptionHandler();
+
+    app.MapControllers();
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Products.API terminó de forma inesperada");
+}
+finally
+{
+    // Vacía el buffer para no perder los últimos logs al apagar el servicio.
+    Log.CloseAndFlush();
+}

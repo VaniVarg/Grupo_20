@@ -1,0 +1,161 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\potis\\Desktop\\Grupo_20\\",
+<<<<<<< Updated upstream
+  "Documents": [],
+=======
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\DTOs\\SendNotificationRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Notifications.API\\DTOs\\SendNotificationRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Exceptions\\ErrorCodes.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Notifications.API\\Exceptions\\ErrorCodes.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\DTOs\\NotificationResponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Notifications.API\\DTOs\\NotificationResponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Models\\NotificationType.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Notifications.API\\Models\\NotificationType.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Models\\NotificationStatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Notifications.API\\Models\\NotificationStatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Models\\Notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Notifications.API\\Models\\Notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Properties\\launchSettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Notifications.API\\Properties\\launchSettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Notifications.API.csproj||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Notifications.API\\Notifications.API.csproj||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+>>>>>>> Stashed changes
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+<<<<<<< Updated upstream
+          "SelectedChildIndex": -1,
+=======
+          "SelectedChildIndex": 2,
+>>>>>>> Stashed changes
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+<<<<<<< Updated upstream
+=======
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ErrorCodes.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Exceptions\\ErrorCodes.cs",
+              "RelativeDocumentMoniker": "src\\Notifications.API\\Exceptions\\ErrorCodes.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Exceptions\\ErrorCodes.cs",
+              "RelativeToolTip": "src\\Notifications.API\\Exceptions\\ErrorCodes.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-15T09:42:28.677Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SendNotificationRequest.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\DTOs\\SendNotificationRequest.cs",
+              "RelativeDocumentMoniker": "src\\Notifications.API\\DTOs\\SendNotificationRequest.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\DTOs\\SendNotificationRequest.cs",
+              "RelativeToolTip": "src\\Notifications.API\\DTOs\\SendNotificationRequest.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-15T09:41:01.176Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NotificationResponse.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\DTOs\\NotificationResponse.cs",
+              "RelativeDocumentMoniker": "src\\Notifications.API\\DTOs\\NotificationResponse.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\DTOs\\NotificationResponse.cs",
+              "RelativeToolTip": "src\\Notifications.API\\DTOs\\NotificationResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-15T09:40:08.408Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NotificationType.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Models\\NotificationType.cs",
+              "RelativeDocumentMoniker": "src\\Notifications.API\\Models\\NotificationType.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Models\\NotificationType.cs",
+              "RelativeToolTip": "src\\Notifications.API\\Models\\NotificationType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-15T09:38:38.498Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NotificationStatus.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Models\\NotificationStatus.cs",
+              "RelativeDocumentMoniker": "src\\Notifications.API\\Models\\NotificationStatus.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Models\\NotificationStatus.cs",
+              "RelativeToolTip": "src\\Notifications.API\\Models\\NotificationStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-15T09:37:25.038Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Notification.cs",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Models\\Notification.cs",
+              "RelativeDocumentMoniker": "src\\Notifications.API\\Models\\Notification.cs",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Models\\Notification.cs",
+              "RelativeToolTip": "src\\Notifications.API\\Models\\Notification.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-15T09:35:37.087Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "src\\Notifications.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "src\\Notifications.API\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-15T09:33:32.887Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Notifications.API.csproj",
+              "DocumentMoniker": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Notifications.API.csproj",
+              "RelativeDocumentMoniker": "src\\Notifications.API\\Notifications.API.csproj",
+              "ToolTip": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Notifications.API\\Notifications.API.csproj",
+              "RelativeToolTip": "src\\Notifications.API\\Notifications.API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-15T09:30:33.448Z"
+>>>>>>> Stashed changes
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
