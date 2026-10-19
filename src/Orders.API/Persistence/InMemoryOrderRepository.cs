@@ -15,4 +15,21 @@ public class InMemoryOrderRepository : IOrderRepository
         _orders[order.Id] = order;
         return Task.CompletedTask;
     }
+
+    public Task<Order?> GetByIdAsync(Guid id)
+    {
+        _orders.TryGetValue(id, out var order);
+        return Task.FromResult<Order?>(order);
+    }
+
+    public Task<IEnumerable<Order>> GetAllAsync(Guid? usuarioId)
+    {
+        IEnumerable<Order> query = _orders.Values;
+
+        // Filtro opcional ?usuarioId=
+        if (usuarioId.HasValue)
+            query = query.Where(o => o.UsuarioId == usuarioId.Value);
+
+        return Task.FromResult<IEnumerable<Order>>(query.OrderByDescending(o => o.FechaCreacion).ToList());
+    }
 }

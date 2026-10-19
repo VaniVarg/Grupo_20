@@ -80,6 +80,20 @@ public class OrderService(
         return ToResponse(order);
     }
 
+    public async Task<OrderResponse> GetByIdAsync(Guid id)
+    {
+        var order = await repository.GetByIdAsync(id)
+            ?? throw new NotFoundException(ErrorCodes.ORD_001, "Orden no encontrada.");
+
+        return ToResponse(order);
+    }
+
+    public async Task<IEnumerable<OrderResponse>> GetAllAsync(Guid? usuarioId)
+    {
+        var orders = await repository.GetAllAsync(usuarioId);
+        return orders.Select(ToResponse).ToList();
+    }
+
     private static OrderResponse ToResponse(Order o) => new()
     {
         Id = o.Id,

@@ -12,3 +12,12 @@ Content-Type: application/json
     { "productoId": "{{productId}}", "cantidad": 2 }
   ]
 }
+
+### Listar todas las órdenes
+GET {{host}}/api/orders
+
+### Listar las órdenes de un usuario
+GET {{host}}/api/orders?usuarioId={{userId}}
+
+### Obtener una orden por ID (reemplazar el ID)
+GET {{host}}/api/orders/REEMPLAZAR-POR-UN-ID-DE-ORDEN
