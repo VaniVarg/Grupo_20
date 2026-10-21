@@ -1,50 +1,137 @@
 using Cart.API.Clients;
 using Cart.API.ExceptionHandlers;
+using Cart.API.HealthChecks;
 using Cart.API.Middleware;
 using Cart.API.Persistence;
 using Cart.API.Services;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Json;
 
-var builder = WebApplication.CreateBuilder(args);
+// Serilog se configura ANTES que cualquier otra cosa, así se registra también el arranque.
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("Service", "Cart.API")
+    // Consola legible. CorrelationId viene del scope que abre CorrelationIdMiddleware.
+    .WriteTo.Console(outputTemplate:
+        "[{Timestamp:HH:mm:ss} {Level:u3}] [{Service}] [{CorrelationId}] {Message:lj}{NewLine}{Exception}")
+    // Archivo JSON con todas las propiedades (Service, Endpoint, CorrelationId, ErrorCode...).
+    .WriteTo.File(new JsonFormatter(renderMessage: true), "logs/cart-.log",
+        rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
-builder.Services
-    .AddControllers()
-    // La validación de la cantidad la hace el Service para devolver CRT-004.
-    .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
-
-builder.Services.AddSingleton<ICartRepository, InMemoryCartRepository>();
-builder.Services.AddScoped<ICartService, CartService>();
-
-// Hace falta para leer el Correlation ID del request actual desde los clientes HTTP.
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddTransient<CorrelationIdDelegatingHandler>();
-
-// Cliente HTTP tipado hacia Products.API. IHttpClientFactory administra las conexiones,
-// y la URL sale de appsettings.json (así no queda escrita en el código).
-builder.Services.AddHttpClient<IProductsClient, ProductsClient>(client =>
+try
 {
-    client.BaseAddress = new Uri(
-        builder.Configuration["Services:ProductsApi"]
-        ?? throw new InvalidOperationException("Falta la configuración Services:ProductsApi."));
-    client.Timeout = TimeSpan.FromSeconds(5);
-})
-// En cada llamada saliente se agrega el header X-Correlation-Id.
-.AddHttpMessageHandler<CorrelationIdDelegatingHandler>();
+    var builder = WebApplication.CreateBuilder(args);
 
-// Manejo global de errores: los específicos primero, el genérico último.
-builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
-builder.Services.AddExceptionHandler<BusinessRuleExceptionHandler>();
-builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails();
+    builder.Host.UseSerilog();
 
-var app = builder.Build();
+    builder.Services
+        .AddControllers()
+        // La validación de la cantidad la hace el Service para devolver CRT-004.
+        .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 
-// Tiene que ser el PRIMER middleware: así el Correlation ID existe para todo lo que sigue,
-// incluidos los handlers de errores.
-app.UseMiddleware<CorrelationIdMiddleware>();
+    builder.Services.AddSingleton<ICartRepository, InMemoryCartRepository>();
+    builder.Services.AddScoped<ICartService, CartService>();
 
-app.UseExceptionHandler();
+    // Correlation ID: permite leerlo desde los clientes HTTP y reenviarlo al otro servicio.
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddTransient<CorrelationIdDelegatingHandler>();
 
-app.MapControllers();
+    // Cliente HTTP tipado hacia Products.API. La URL sale de appsettings.json.
+    builder.Services.AddHttpClient<IProductsClient, ProductsClient>(client =>
+    {
+        client.BaseAddress = new Uri(
+            builder.Configuration["Services:ProductsApi"]
+            ?? throw new InvalidOperationException("Falta la configuración Services:ProductsApi."));
+        client.Timeout = TimeSpan.FromSeconds(5);
+    })
+    .AddHttpMessageHandler<CorrelationIdDelegatingHandler>();
 
-app.Run();
+    // Cliente HTTP que usa solamente el health check, con un timeout más corto.
+    builder.Services.AddHttpClient<ProductsApiHealthCheck>(client =>
+    {
+        client.BaseAddress = new Uri(builder.Configuration["Services:ProductsApi"]!);
+        client.Timeout = TimeSpan.FromSeconds(2);
+    });
+
+    // Health checks. Cada chequeo lleva una etiqueta que indica para qué endpoint cuenta:
+    //   "live"  -> ¿el proceso está vivo?
+    //   "ready" -> ¿está listo para atender (sus dependencias responden)?
+    builder.Services.AddHealthChecks()
+        .AddCheck("self", () => HealthCheckResult.Healthy("El servicio está en ejecución."), tags: ["live"])
+        .AddCheck<ProductsApiHealthCheck>("products-api", tags: ["ready"]);
+
+    // Manejo global de errores: los específicos primero, el genérico último.
+    builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+    builder.Services.AddExceptionHandler<BusinessRuleExceptionHandler>();
+    builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
+    builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+    builder.Services.AddProblemDetails();
+
+    var app = builder.Build();
+
+    // Primer middleware: el Correlation ID tiene que existir para todo lo que sigue.
+    app.UseMiddleware<CorrelationIdMiddleware>();
+
+    // Inicio de cada request. Se usa app.Logger (ILogger) para que el log tome el CorrelationId del scope.
+    app.Use(async (context, next) =>
+    {
+        var endpoint = $"{context.Request.Method} {context.Request.Path}";
+
+        using (app.Logger.BeginScope(new Dictionary<string, object> { ["Endpoint"] = endpoint }))
+        {
+            app.Logger.LogInformation("Inicio {Endpoint}", endpoint);
+            await next();
+        }
+    });
+
+    // Fin de cada request, con status y duración. Este log lo escribe Serilog directamente,
+    // así que el CorrelationId se le agrega de forma explícita.
+    app.UseSerilogRequestLogging(options =>
+    {
+        options.MessageTemplate = "Fin {RequestMethod} {RequestPath} => {StatusCode} en {Elapsed:0.0} ms";
+        options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+        {
+            if (httpContext.Items.TryGetValue(CorrelationIdMiddleware.ItemKey, out var id))
+                diagnosticContext.Set("CorrelationId", id);
+        };
+    });
+
+    app.UseExceptionHandler();
+
+    app.MapControllers();
+
+    // GET /health       -> todos los chequeos
+    // GET /health/live  -> solo los "live" (¿el proceso está vivo?)
+    // GET /health/ready -> solo los "ready" (¿puede atender pedidos?)
+    app.MapHealthChecks("/health", new HealthCheckOptions
+    {
+        ResponseWriter = HealthCheckResponseWriter.WriteAsync
+    });
+    app.MapHealthChecks("/health/live", new HealthCheckOptions
+    {
+        Predicate = check => check.Tags.Contains("live"),
+        ResponseWriter = HealthCheckResponseWriter.WriteAsync
+    });
+    app.MapHealthChecks("/health/ready", new HealthCheckOptions
+    {
+        Predicate = check => check.Tags.Contains("ready"),
+        ResponseWriter = HealthCheckResponseWriter.WriteAsync
+    });
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Cart.API terminó de forma inesperada");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
