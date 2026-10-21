@@ -1,0 +1,23 @@
+@host = http://localhost:5103
+@userId = REEMPLAZAR-POR-UN-ID-DE-USUARIO-REAL
+@productId = REEMPLAZAR-POR-UN-ID-DE-PRODUCTO-REAL
+
+### Crear orden (Users.API y Products.API tienen que estar levantados)
+POST {{host}}/api/orders
+Content-Type: application/json
+
+{
+  "usuarioId": "{{userId}}",
+  "items": [
+    { "productoId": "{{productId}}", "cantidad": 2 }
+  ]
+}
+
+### Listar todas las órdenes
+GET {{host}}/api/orders
+
+### Listar las órdenes de un usuario
+GET {{host}}/api/orders?usuarioId={{userId}}
+
+### Obtener una orden por ID (reemplazar el ID)
+GET {{host}}/api/orders/REEMPLAZAR-POR-UN-ID-DE-ORDEN

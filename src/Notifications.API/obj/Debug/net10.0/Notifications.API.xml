@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Notifications.API</name>
+    </assembly>
+    <members>
+        <member name="T:Notifications.API.DTOs.NotificationResponse">
+            <summary>Notificación tal como la devuelve la API.</summary>
+        </member>
+        <member name="T:Notifications.API.Exceptions.ErrorCodes">
+            <summary>
+            Catálogo de códigos de error de Notifications.API.
+            </summary>
+        </member>
+        <member name="F:Notifications.API.Exceptions.ErrorCodes.NTF_001">
+            <summary>404 - El usuario destinatario no existe en Users.API.</summary>
+        </member>
+        <member name="F:Notifications.API.Exceptions.ErrorCodes.NTF_002">
+            <summary>400 - Datos de la notificación inválidos (campos faltantes o tipo no reconocido).</summary>
+        </member>
+        <member name="F:Notifications.API.Exceptions.ErrorCodes.NTF_003">
+            <summary>404 - El usuario no tiene notificaciones registradas.</summary>
+        </member>
+        <member name="F:Notifications.API.Exceptions.ErrorCodes.NTF_004">
+            <summary>500 - Error interno inesperado.</summary>
+        </member>
+        <member name="T:Program">
+            <summary>
+            Auto-generated public partial Program class for top-level statement apps.
+            </summary>
+        </member>
+    </members>
+</doc>
