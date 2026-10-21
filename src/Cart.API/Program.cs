@@ -1,5 +1,6 @@
 using Cart.API.Clients;
 using Cart.API.ExceptionHandlers;
+using Cart.API.Middleware;
 using Cart.API.Persistence;
 using Cart.API.Services;
 
@@ -13,6 +14,10 @@ builder.Services
 builder.Services.AddSingleton<ICartRepository, InMemoryCartRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
 
+// Hace falta para leer el Correlation ID del request actual desde los clientes HTTP.
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<CorrelationIdDelegatingHandler>();
+
 // Cliente HTTP tipado hacia Products.API. IHttpClientFactory administra las conexiones,
 // y la URL sale de appsettings.json (así no queda escrita en el código).
 builder.Services.AddHttpClient<IProductsClient, ProductsClient>(client =>
@@ -21,7 +26,9 @@ builder.Services.AddHttpClient<IProductsClient, ProductsClient>(client =>
         builder.Configuration["Services:ProductsApi"]
         ?? throw new InvalidOperationException("Falta la configuración Services:ProductsApi."));
     client.Timeout = TimeSpan.FromSeconds(5);
-});
+})
+// En cada llamada saliente se agrega el header X-Correlation-Id.
+.AddHttpMessageHandler<CorrelationIdDelegatingHandler>();
 
 // Manejo global de errores: los específicos primero, el genérico último.
 builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
@@ -31,6 +38,10 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();
+
+// Tiene que ser el PRIMER middleware: así el Correlation ID existe para todo lo que sigue,
+// incluidos los handlers de errores.
+app.UseMiddleware<CorrelationIdMiddleware>();
 
 app.UseExceptionHandler();
 

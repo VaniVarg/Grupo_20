@@ -36,3 +36,7 @@ Content-Type: application/json
   "productoId": "{{productId}}",
   "cantidad": 9999
 }
+
+### Enviar tu propio Correlation ID: debe volver igual en el header de la respuesta
+GET {{host}}/api/cart/{{userId}}
+X-Correlation-Id: mi-id-de-prueba-123
