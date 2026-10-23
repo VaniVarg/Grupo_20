@@ -1,11 +1,12 @@
-﻿using Products.API.DTOs;
+﻿using Products.API.Clients;
+using Products.API.DTOs;
 using Products.API.Exceptions;
 using Products.API.Models;
 using Products.API.Persistence;
 
 namespace Products.API.Services;
 
-public class ProductService(IProductRepository repository) : IProductService
+public class ProductService(IProductRepository repository, IOrdersClient ordersClient) : IProductService
 {
     public async Task<IEnumerable<ProductResponse>> GetAllAsync(string? categoria, string? nombre)
     {
@@ -67,6 +68,17 @@ public class ProductService(IProductRepository repository) : IProductService
     public async Task DeleteAsync(Guid id)
     {
         await GetOrThrowAsync(id);
+
+        // Llamada HTTP a Orders.API: no se puede borrar un producto con órdenes Pendiente o
+        // Confirmada (PRD-004). Si Orders.API no responde, la excepción sube y el handler genérico
+        // devuelve PRD-005: ante la duda NO se borra.
+        if (await ordersClient.HasActiveOrdersAsync(id))
+        {
+            throw new BusinessRuleException(
+                ErrorCodes.PRD_004,
+                "El producto tiene órdenes activas y no puede eliminarse.");
+        }
+
         await repository.DeleteAsync(id);
     }
 
