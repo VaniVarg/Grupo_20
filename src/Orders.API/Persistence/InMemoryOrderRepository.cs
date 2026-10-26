@@ -32,4 +32,10 @@ public class InMemoryOrderRepository : IOrderRepository
 
         return Task.FromResult<IEnumerable<Order>>(query.OrderByDescending(o => o.FechaCreacion).ToList());
     }
+
+    public Task UpdateAsync(Order order)
+    {
+        _orders[order.Id] = order;
+        return Task.CompletedTask;
+    }
 }
