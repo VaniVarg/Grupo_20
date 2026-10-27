@@ -94,6 +94,44 @@ public class OrderService(
         return orders.Select(ToResponse).ToList();
     }
 
+    public async Task<UpdateOrderStatusResponse> UpdateStatusAsync(Guid id, UpdateOrderStatusRequest request)
+    {
+        RequestValidator.Validate(request, ErrorCodes.ORD_002, "Los datos de la orden son inválidos.");
+
+        // El estado recibido tiene que ser uno de los cinco; se guarda con su valor canónico.
+        var nuevoEstado = OrderStatus.All
+            .FirstOrDefault(e => e.Equals(request.Estado.Trim(), StringComparison.OrdinalIgnoreCase))
+            ?? throw new ValidationException(
+                ErrorCodes.ORD_002,
+                $"Estado inválido. Valores permitidos: {string.Join(", ", OrderStatus.All)}.");
+
+        var order = await repository.GetByIdAsync(id)
+            ?? throw new NotFoundException(ErrorCodes.ORD_001, "Orden no encontrada.");
+
+        // ORD-006: solo se permiten las transiciones definidas en OrderStatus.
+        if (!OrderStatus.CanTransition(order.Estado, nuevoEstado))
+        {
+            throw new ConflictException(
+                ErrorCodes.ORD_006,
+                $"Una orden en estado '{order.Estado}' no puede pasar a '{nuevoEstado}'.");
+        }
+
+        var estadoAnterior = order.Estado;
+        order.Estado = nuevoEstado;
+        order.FechaActualizacion = DateTime.UtcNow;
+        await repository.UpdateAsync(order);
+
+        logger.LogInformation("Orden {OrderId} pasó de {EstadoAnterior} a {EstadoNuevo}",
+            order.Id, estadoAnterior, nuevoEstado);
+
+        return new UpdateOrderStatusResponse
+        {
+            Id = order.Id,
+            Estado = order.Estado,
+            FechaActualizacion = order.FechaActualizacion.Value
+        };
+    }
+
     private static OrderResponse ToResponse(Order o) => new()
     {
         Id = o.Id,

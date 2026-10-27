@@ -1,3 +1,4 @@
+using Products.API.Clients;
 using Products.API.ExceptionHandlers;
 using Products.API.Persistence;
 using Products.API.Services;
@@ -38,6 +39,15 @@ try
 
     builder.Services.AddSingleton<IProductRepository, InMemoryProductRepository>();
     builder.Services.AddScoped<IProductService, ProductService>();
+
+    // Cliente HTTP tipado hacia Orders.API. La URL sale de appsettings.json.
+    builder.Services.AddHttpClient<IOrdersClient, OrdersClient>(client =>
+    {
+        client.BaseAddress = new Uri(
+            builder.Configuration["Services:OrdersApi"]
+            ?? throw new InvalidOperationException("Falta la configuración Services:OrdersApi."));
+        client.Timeout = TimeSpan.FromSeconds(5);
+    });
 
     builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
     builder.Services.AddExceptionHandler<BusinessRuleExceptionHandler>();

@@ -33,4 +33,12 @@ public class OrdersController(IOrderService service) : ControllerBase
         var created = await service.CreateAsync(request);
         return Created($"/api/orders/{created.Id}", created);
     }
+
+    /// <summary>Cambia el estado de una orden. Solo se permiten ciertas transiciones.</summary>
+    [HttpPut("{id}/status")]
+    public async Task<ActionResult<UpdateOrderStatusResponse>> UpdateStatus(
+        Guid id, [FromBody] UpdateOrderStatusRequest request)
+    {
+        return Ok(await service.UpdateStatusAsync(id, request));
+    }
 }
