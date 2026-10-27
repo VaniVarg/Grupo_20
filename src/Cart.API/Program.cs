@@ -1,3 +1,5 @@
+using Cart.API.Swagger;
+using Microsoft.OpenApi.Models;
 using Cart.API.Clients;
 using Cart.API.ExceptionHandlers;
 using Cart.API.HealthChecks;
@@ -74,6 +76,24 @@ try
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddProblemDetails();
 
+    // Swagger: documentación interactiva en /swagger.
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "Cart API",
+            Version = "v1",
+            Description = "Carrito de compras por usuario, con validación de producto y stock contra Products.API."
+        });
+
+        // Toma los comentarios /// de controladores y DTOs (el .xml lo genera el compilador).
+        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Cart.API.xml"));
+
+        // Agrega a cada endpoint los ejemplos de error declarados con [ErrorResponse].
+        options.OperationFilter<ErrorResponsesOperationFilter>();
+    });
+
     var app = builder.Build();
 
     // Primer middleware: el Correlation ID tiene que existir para todo lo que sigue.
@@ -104,6 +124,10 @@ try
     });
 
     app.UseExceptionHandler();
+
+    // Swagger UI en /swagger.
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     app.MapControllers();
 
