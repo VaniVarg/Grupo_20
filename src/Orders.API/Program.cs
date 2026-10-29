@@ -1,3 +1,5 @@
+using Orders.API.Swagger;
+using Microsoft.OpenApi.Models;
 using Orders.API.Clients;
 using Orders.API.ExceptionHandlers;
 using Orders.API.Persistence;
@@ -60,6 +62,24 @@ try
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddProblemDetails();
 
+    // Swagger: documentación interactiva en /swagger.
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "Orders API",
+            Version = "v1",
+            Description = "Órdenes de compra: creación con validación de usuario, productos y stock, consulta y cambio de estado."
+        });
+
+        // Toma los comentarios /// de controladores y DTOs (el .xml lo genera el compilador).
+        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Orders.API.xml"));
+
+        // Agrega a cada endpoint los ejemplos de error declarados con [ErrorResponse].
+        options.OperationFilter<ErrorResponsesOperationFilter>();
+    });
+
     var app = builder.Build();
 
     // Inicio de cada request: agrega el endpoint a TODOS los logs del request.
@@ -81,6 +101,10 @@ try
     });
 
     app.UseExceptionHandler();
+
+    // Swagger UI en /swagger.
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     app.MapControllers();
 
