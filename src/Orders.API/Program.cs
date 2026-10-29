@@ -1,22 +1,28 @@
 using Orders.API.Clients;
 using Orders.API.ExceptionHandlers;
+using Orders.API.HealthChecks;
+using Orders.API.Middleware;
 using Orders.API.Persistence;
 using Orders.API.Services;
+using Orders.API.Swagger;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.OpenApi.Models;
 using Serilog;
-using Serilog.Context;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 
 // Serilog se configura ANTES que cualquier otra cosa, así se registra también el arranque.
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
-    // Silenciamos el ruido interno del framework, pero dejamos ver el puerto en el que escucha.
     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
     .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
     .Enrich.FromLogContext()
     .Enrich.WithProperty("Service", "Orders.API")
+    // Consola legible. CorrelationId viene del scope que abre CorrelationIdMiddleware.
     .WriteTo.Console(outputTemplate:
-        "[{Timestamp:HH:mm:ss} {Level:u3}] [{Service}] {Message:lj}{NewLine}{Exception}")
+        "[{Timestamp:HH:mm:ss} {Level:u3}] [{Service}] [{CorrelationId}] {Message:lj}{NewLine}{Exception}")
+    // Archivo JSON con todas las propiedades (Service, Endpoint, CorrelationId, ErrorCode...).
     .WriteTo.File(new JsonFormatter(renderMessage: true), "logs/orders-.log",
         rollingInterval: RollingInterval.Day)
     .CreateLogger();
@@ -24,7 +30,6 @@ Log.Logger = new LoggerConfiguration()
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-
     builder.Host.UseSerilog();
 
     builder.Services
@@ -35,21 +40,68 @@ try
     builder.Services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
     builder.Services.AddScoped<IOrderService, OrderService>();
 
-    // Clientes HTTP tipados hacia los otros servicios. Las URLs salen de appsettings.json.
+    // Correlation ID: permite leerlo desde los clientes HTTP y reenviarlo al otro servicio.
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddTransient<CorrelationIdDelegatingHandler>();
+
+    // Cliente HTTP tipado hacia Users.API. La URL sale de appsettings.json.
     builder.Services.AddHttpClient<IUsersClient, UsersClient>(client =>
     {
         client.BaseAddress = new Uri(
             builder.Configuration["Services:UsersApi"]
             ?? throw new InvalidOperationException("Falta la configuración Services:UsersApi."));
         client.Timeout = TimeSpan.FromSeconds(5);
-    });
+    })
+    .AddHttpMessageHandler<CorrelationIdDelegatingHandler>();
 
+    // Cliente HTTP tipado hacia Products.API. La URL sale de appsettings.json.
     builder.Services.AddHttpClient<IProductsClient, ProductsClient>(client =>
     {
         client.BaseAddress = new Uri(
             builder.Configuration["Services:ProductsApi"]
             ?? throw new InvalidOperationException("Falta la configuración Services:ProductsApi."));
         client.Timeout = TimeSpan.FromSeconds(5);
+    })
+    .AddHttpMessageHandler<CorrelationIdDelegatingHandler>();
+
+    // Cliente HTTP que usa solamente el health check, con un timeout más corto.
+    builder.Services.AddHttpClient<UsersApiHealthCheck>(client =>
+    {
+        client.BaseAddress = new Uri(builder.Configuration["Services:UsersApi"]!);
+        client.Timeout = TimeSpan.FromSeconds(2);
+    });
+
+    // Cliente HTTP que usa solamente el health check, con un timeout más corto.
+    builder.Services.AddHttpClient<ProductsApiHealthCheck>(client =>
+    {
+        client.BaseAddress = new Uri(builder.Configuration["Services:ProductsApi"]!);
+        client.Timeout = TimeSpan.FromSeconds(2);
+    });
+
+    // Health checks. Cada chequeo lleva una etiqueta que indica para qué endpoint cuenta:
+    // "live" -> ¿el proceso está vivo?
+    // "ready" -> ¿está listo para atender (sus dependencias responden)?
+    builder.Services.AddHealthChecks()
+        .AddCheck("self", () => HealthCheckResult.Healthy("El servicio está en ejecución."), tags: ["live"])
+        .AddCheck<UsersApiHealthCheck>("users-api", tags: ["ready"])
+        .AddCheck<ProductsApiHealthCheck>("products-api", tags: ["ready"]);
+
+    // Swagger: documentación interactiva en /swagger.
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "Orders API",
+            Version = "v1",
+            Description = "Órdenes de compra: creación con validación de usuario, productos y stock, consulta y cambio de estado."
+        });
+
+        // Toma los comentarios /// de controladores y DTOs (el .xml lo genera el compilador).
+        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Orders.API.xml"));
+
+        // Agrega a cada endpoint los ejemplos de error declarados con [ErrorResponse].
+        options.OperationFilter<ErrorResponsesOperationFilter>();
     });
 
     // Manejo global de errores: los específicos primero, el genérico último.
@@ -62,27 +114,57 @@ try
 
     var app = builder.Build();
 
-    // Inicio de cada request: agrega el endpoint a TODOS los logs del request.
+    // Primer middleware: el Correlation ID tiene que existir para todo lo que sigue.
+    app.UseMiddleware<CorrelationIdMiddleware>();
+
+    // Inicio de cada request. Se usa app.Logger (ILogger) para que el log tome el CorrelationId del scope.
     app.Use(async (context, next) =>
     {
         var endpoint = $"{context.Request.Method} {context.Request.Path}";
-
-        using (LogContext.PushProperty("Endpoint", endpoint))
+        using (app.Logger.BeginScope(new Dictionary<string, object> { ["Endpoint"] = endpoint }))
         {
-            Log.Information("Inicio {Endpoint}", endpoint);
+            app.Logger.LogInformation("Inicio {Endpoint}", endpoint);
             await next();
         }
     });
 
-    // Fin de cada request, con el status y la duración.
+    // Fin de cada request, con status y duración. Este log lo escribe Serilog directamente,
+    // así que el CorrelationId se le agrega de forma explícita.
     app.UseSerilogRequestLogging(options =>
     {
         options.MessageTemplate = "Fin {RequestMethod} {RequestPath} => {StatusCode} en {Elapsed:0.0} ms";
+        options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+        {
+            if (httpContext.Items.TryGetValue(CorrelationIdMiddleware.ItemKey, out var id))
+                diagnosticContext.Set("CorrelationId", id);
+        };
     });
 
     app.UseExceptionHandler();
 
+    // Swagger UI en /swagger.
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
     app.MapControllers();
+
+    // GET /health -> todos los chequeos
+    // GET /health/live -> solo los "live" (¿el proceso está vivo?)
+    // GET /health/ready -> solo los "ready" (¿puede atender pedidos?)
+    app.MapHealthChecks("/health", new HealthCheckOptions
+    {
+        ResponseWriter = HealthCheckResponseWriter.WriteAsync
+    });
+    app.MapHealthChecks("/health/live", new HealthCheckOptions
+    {
+        Predicate = check => check.Tags.Contains("live"),
+        ResponseWriter = HealthCheckResponseWriter.WriteAsync
+    });
+    app.MapHealthChecks("/health/ready", new HealthCheckOptions
+    {
+        Predicate = check => check.Tags.Contains("ready"),
+        ResponseWriter = HealthCheckResponseWriter.WriteAsync
+    });
 
     app.Run();
 }

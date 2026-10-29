@@ -1,8 +1,10 @@
+using Orders.API.Middleware;
+
 namespace Orders.API.ExceptionHandlers;
 
 /// <summary>
 /// Escribe la respuesta de error con el formato de la consigna: los campos estándar de
-/// Problem Details más errorCode y errorMessage. Los handlers la usan para no repetir código.
+/// Problem Details, errorCode, errorMessage y el correlationId del request.
 /// </summary>
 public static class ErrorResponseWriter
 {
@@ -18,6 +20,9 @@ public static class ErrorResponseWriter
     {
         context.Response.StatusCode = status;
 
+        // Campo extra que pide la consigna: permite buscar este error en los logs de todos los servicios.
+        context.Items.TryGetValue(CorrelationIdMiddleware.ItemKey, out var correlationId);
+
         await context.Response.WriteAsJsonAsync(new
         {
             type,
@@ -26,7 +31,8 @@ public static class ErrorResponseWriter
             detail,
             instance = context.Request.Path.Value,
             errorCode,
-            errorMessage
+            errorMessage,
+            correlationId = correlationId as string
         }, cancellationToken: cancellationToken);
     }
 }

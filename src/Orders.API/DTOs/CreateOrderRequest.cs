@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Orders.API.DTOs;
 
@@ -6,6 +6,7 @@ namespace Orders.API.DTOs;
 public class CreateOrderRequest
 {
     /// <summary>Usuario que realiza la orden.</summary>
+    /// <example>a1b2c3d4-0000-0000-0000-111122223333</example>
     public Guid UsuarioId { get; set; }
 
     /// <summary>Productos a comprar (al menos uno).</summary>

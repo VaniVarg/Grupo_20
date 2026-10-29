@@ -1,3 +1,5 @@
+using Users.API.Swagger;
+using Microsoft.OpenApi.Models;
 using Users.API.ExceptionHandlers;
 using Users.API.Persistence;
 using Users.API.Services;
@@ -43,6 +45,24 @@ try
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddProblemDetails();
 
+    // Swagger: documentación interactiva en /swagger.
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "Users API",
+            Version = "v1",
+            Description = "Registro, login y consulta de usuarios, con bloqueo de cuenta tras tres intentos fallidos."
+        });
+
+        // Toma los comentarios /// de controladores y DTOs (el .xml lo genera el compilador).
+        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Users.API.xml"));
+
+        // Agrega a cada endpoint los ejemplos de error declarados con [ErrorResponse].
+        options.OperationFilter<ErrorResponsesOperationFilter>();
+    });
+
     var app = builder.Build();
 
     // Inicio de cada request: agrega el endpoint a TODOS los logs del request.
@@ -64,6 +84,10 @@ try
     });
 
     app.UseExceptionHandler();
+
+    // Swagger UI en /swagger.
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     app.MapControllers();
 

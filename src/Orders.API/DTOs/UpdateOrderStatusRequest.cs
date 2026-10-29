@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Orders.API.DTOs;
 
@@ -6,6 +6,7 @@ namespace Orders.API.DTOs;
 public class UpdateOrderStatusRequest
 {
     /// <summary>Nuevo estado: Pendiente, Confirmada, Enviada, Entregada o Cancelada.</summary>
+    /// <example>Confirmada</example>
     [Required(ErrorMessage = "El estado es obligatorio.")]
     public string Estado { get; set; } = string.Empty;
 }
