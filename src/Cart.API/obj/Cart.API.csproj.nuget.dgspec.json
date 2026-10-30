@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\NOE\\Documents\\GitHub\\Grupo_20\\src\\Cart.API\\Cart.API.csproj": {}
+    "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Cart.API\\Cart.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\NOE\\Documents\\GitHub\\Grupo_20\\src\\Cart.API\\Cart.API.csproj": {
+    "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Cart.API\\Cart.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\NOE\\Documents\\GitHub\\Grupo_20\\src\\Cart.API\\Cart.API.csproj",
+        "projectUniqueName": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Cart.API\\Cart.API.csproj",
         "projectName": "Cart.API",
-        "projectPath": "C:\\Users\\NOE\\Documents\\GitHub\\Grupo_20\\src\\Cart.API\\Cart.API.csproj",
-        "packagesPath": "C:\\Users\\NOE\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\NOE\\Documents\\GitHub\\Grupo_20\\src\\Cart.API\\obj\\",
+        "projectPath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Cart.API\\Cart.API.csproj",
+        "packagesPath": "C:\\Users\\potis\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\potis\\Desktop\\Grupo_20\\src\\Cart.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\NOE\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\potis\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -88,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
