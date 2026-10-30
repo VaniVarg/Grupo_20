@@ -1,3 +1,5 @@
+using Products.API.Swagger;
+using Microsoft.OpenApi.Models;
 using Products.API.Clients;
 using Products.API.ExceptionHandlers;
 using Products.API.Persistence;
@@ -55,6 +57,24 @@ try
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddProblemDetails();
 
+    // Swagger: documentación interactiva en /swagger.
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "Products API",
+            Version = "v1",
+            Description = "Catálogo de productos del e-commerce: alta, consulta, modificación y baja."
+        });
+
+        // Toma los comentarios /// de controladores y DTOs (el .xml lo genera el compilador).
+        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Products.API.xml"));
+
+        // Agrega a cada endpoint los ejemplos de error declarados con [ErrorResponse].
+        options.OperationFilter<ErrorResponsesOperationFilter>();
+    });
+
     var app = builder.Build();
 
     // Inicio de cada request: agrega el endpoint a TODOS los logs del request y registra el comienzo.
@@ -78,6 +98,10 @@ try
 
     app.UseExceptionHandler();
 
+    // Swagger UI en /swagger.
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
     app.MapControllers();
 
     app.Run();
@@ -91,3 +115,4 @@ finally
     // Vacía el buffer para no perder los últimos logs al apagar el servicio.
     Log.CloseAndFlush();
 }
+
