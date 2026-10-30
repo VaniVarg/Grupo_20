@@ -1,3 +1,5 @@
+using Notifications.API.Swagger;
+using Microsoft.OpenApi.Models;
 using Notifications.API.Clients;
 using Notifications.API.ExceptionHandlers;
 using Notifications.API.Persistence;
@@ -29,10 +31,32 @@ builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
+// Swagger: documentación interactiva en /swagger.
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Notifications API",
+        Version = "v1",
+        Description = "Registro y consulta de notificaciones. El envío es simulado."
+    });
+
+    // Toma los comentarios /// de controladores y DTOs (el .xml lo genera el compilador).
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Notifications.API.xml"));
+
+    // Agrega a cada endpoint los ejemplos de error declarados con [ErrorResponse].
+    options.OperationFilter<ErrorResponsesOperationFilter>();
+});
+
 var app = builder.Build();
 
 // Activa los handlers. Tiene que ir ANTES de MapControllers.
 app.UseExceptionHandler();
+
+// Swagger UI en /swagger.
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllers();
 

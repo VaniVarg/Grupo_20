@@ -4,8 +4,63 @@
         <name>Notifications.API</name>
     </assembly>
     <members>
+        <member name="T:Notifications.API.Controllers.NotificationsController">
+            <summary>
+            Registro y consulta de notificaciones.
+            </summary>
+        </member>
+        <member name="M:Notifications.API.Controllers.NotificationsController.#ctor(Notifications.API.Services.INotificationService)">
+            <summary>
+            Registro y consulta de notificaciones.
+            </summary>
+        </member>
+        <member name="M:Notifications.API.Controllers.NotificationsController.Send(Notifications.API.DTOs.SendNotificationRequest)">
+            <summary>Registra una notificación y simula su envío.</summary>
+        </member>
+        <member name="M:Notifications.API.Controllers.NotificationsController.GetByUser(System.Guid)">
+            <summary>Lista las notificaciones de un usuario (las más recientes primero).</summary>
+        </member>
         <member name="T:Notifications.API.DTOs.NotificationResponse">
             <summary>Notificación tal como la devuelve la API.</summary>
+        </member>
+        <member name="P:Notifications.API.DTOs.NotificationResponse.Id">
+            <summary>Identificador único de la notificación.</summary>
+            <example>11112222-3333-4444-5555-666677778888</example>
+        </member>
+        <member name="P:Notifications.API.DTOs.NotificationResponse.UsuarioId">
+            <summary>Usuario destinatario.</summary>
+            <example>a1b2c3d4-0000-0000-0000-111122223333</example>
+        </member>
+        <member name="P:Notifications.API.DTOs.NotificationResponse.Mensaje">
+            <summary>Texto del mensaje.</summary>
+            <example>Su orden fue confirmada.</example>
+        </member>
+        <member name="P:Notifications.API.DTOs.NotificationResponse.Tipo">
+            <summary>Email, Push o SMS.</summary>
+            <example>Email</example>
+        </member>
+        <member name="P:Notifications.API.DTOs.NotificationResponse.Estado">
+            <summary>Pendiente, Enviada o Fallida.</summary>
+            <example>Enviada</example>
+        </member>
+        <member name="P:Notifications.API.DTOs.NotificationResponse.FechaEnvio">
+            <summary>Fecha de envío en UTC.</summary>
+            <example>2026-10-28T12:00:00Z</example>
+        </member>
+        <member name="T:Notifications.API.DTOs.SendNotificationRequest">
+            <summary>Cuerpo del POST /api/notifications/send.</summary>
+        </member>
+        <member name="P:Notifications.API.DTOs.SendNotificationRequest.UsuarioId">
+            <summary>Usuario destinatario.</summary>
+            <example>a1b2c3d4-0000-0000-0000-111122223333</example>
+        </member>
+        <member name="P:Notifications.API.DTOs.SendNotificationRequest.Mensaje">
+            <summary>Texto del mensaje.</summary>
+            <example>Su orden fue confirmada.</example>
+        </member>
+        <member name="P:Notifications.API.DTOs.SendNotificationRequest.Tipo">
+            <summary>Email, Push o SMS. El tipo se valida en el Service (NTF-002).</summary>
+            <example>Email</example>
         </member>
         <member name="T:Notifications.API.Exceptions.ErrorCodes">
             <summary>
@@ -23,6 +78,27 @@
         </member>
         <member name="F:Notifications.API.Exceptions.ErrorCodes.NTF_004">
             <summary>500 - Error interno inesperado.</summary>
+        </member>
+        <member name="T:Notifications.API.Swagger.ErrorResponseAttribute">
+            <summary>
+            Declara una respuesta de error de un endpoint (status, errorCode y errorMessage) para que
+            Swagger la muestre con su ejemplo. Se puede repetir: un endpoint puede devolver varios
+            errores con el mismo status, por ejemplo dos 404 distintos.
+            </summary>
+        </member>
+        <member name="M:Notifications.API.Swagger.ErrorResponseAttribute.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            Declara una respuesta de error de un endpoint (status, errorCode y errorMessage) para que
+            Swagger la muestre con su ejemplo. Se puede repetir: un endpoint puede devolver varios
+            errores con el mismo status, por ejemplo dos 404 distintos.
+            </summary>
+        </member>
+        <member name="T:Notifications.API.Swagger.ErrorResponsesOperationFilter">
+            <summary>
+            Lee los atributos [ErrorResponse] de cada endpoint y agrega a Swagger las respuestas de error
+            con ejemplos que siguen el contrato de la consigna (type, title, status, detail, instance,
+            errorCode, errorMessage y correlationId).
+            </summary>
         </member>
         <member name="T:Program">
             <summary>

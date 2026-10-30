@@ -2,18 +2,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Notifications.API.DTOs;
 
-// <summary>Cuerpo del POST /api/notifications/send.</summary>
+/// <summary>Cuerpo del POST /api/notifications/send.</summary>
 public class SendNotificationRequest
 {
-    // <summary>Usuario destinatario.</summary>
+    /// <summary>Usuario destinatario.</summary>
+    /// <example>a1b2c3d4-0000-0000-0000-111122223333</example>
     public Guid UsuarioId { get; set; }
 
-    // <summary>Texto del mensaje.</summary>
+    /// <summary>Texto del mensaje.</summary>
+    /// <example>Su orden fue confirmada.</example>
     [Required(ErrorMessage = "El mensaje es obligatorio.")]
     [StringLength(500, ErrorMessage = "El mensaje no puede superar los 500 caracteres.")]
     public string Mensaje { get; set; } = string.Empty;
 
-    // <summary>Email, Push o SMS. El tipo se valida en el Service (NTF-002).</summary>
+    /// <summary>Email, Push o SMS. El tipo se valida en el Service (NTF-002).</summary>
+    /// <example>Email</example>
     [Required(ErrorMessage = "El tipo es obligatorio.")]
     public string Tipo { get; set; } = string.Empty;
 }
