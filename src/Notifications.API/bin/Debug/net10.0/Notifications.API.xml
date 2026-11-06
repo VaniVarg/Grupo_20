@@ -4,22 +4,6 @@
         <name>Notifications.API</name>
     </assembly>
     <members>
-        <member name="T:Notifications.API.Controllers.NotificationsController">
-            <summary>
-            Registro y consulta de notificaciones.
-            </summary>
-        </member>
-        <member name="M:Notifications.API.Controllers.NotificationsController.#ctor(Notifications.API.Services.INotificationService)">
-            <summary>
-            Registro y consulta de notificaciones.
-            </summary>
-        </member>
-        <member name="M:Notifications.API.Controllers.NotificationsController.Send(Notifications.API.DTOs.SendNotificationRequest)">
-            <summary>Registra una notificación y simula su envío.</summary>
-        </member>
-        <member name="M:Notifications.API.Controllers.NotificationsController.GetByUser(System.Guid)">
-            <summary>Lista las notificaciones de un usuario (las más recientes primero).</summary>
-        </member>
         <member name="T:Notifications.API.DTOs.NotificationResponse">
             <summary>Notificación tal como la devuelve la API.</summary>
         </member>

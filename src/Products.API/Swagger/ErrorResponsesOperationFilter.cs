@@ -5,9 +5,10 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Products.API.Swagger;
 
-// Lee los atributos [ErrorResponse] de cada endpoint y agrega a Swagger las respuestas de error
-// con ejemplos que siguen el contrato de la consigna (type, title, status, detail, instance,
-// errorCode, errorMessage y correlationId).
+/// Lee los atributos [ErrorResponse] de cada endpoint y agrega a Swagger las respuestas de error
+/// con ejemplos que siguen el contrato de la consigna (type, title, status, detail, instance,
+/// errorCode, errorMessage y correlationId).
+
 public class ErrorResponsesOperationFilter : IOperationFilter
 {
     private record ErrorInfo(string Type, string Title, string Detail, string Description);
@@ -17,7 +18,7 @@ public class ErrorResponsesOperationFilter : IOperationFilter
     {
         [400] = new("https://tools.ietf.org/html/rfc7231#section-6.5.1", "Bad Request", "Los datos enviados son inválidos.", "Datos inválidos"),
         [404] = new("https://tools.ietf.org/html/rfc7231#section-6.5.4", "Not Found", "El recurso solicitado no fue encontrado.", "Recurso no encontrado"),
-        [409] = new("https://tools.ietf.org/html/rfc7231#section-6.5.9", "Conflict", "La operación entra en conflicto con el estado actual del recurso.", "Conflicto con el estado actual del recurso"),
+        [409] = new("https://tools.ietf.org/html/rfc7231#section-6.5.9", "Conflict", "Ya existe un recurso con esos datos.", "Conflicto con el estado actual del recurso"),
         [500] = new("https://tools.ietf.org/html/rfc7231#section-6.6.1", "Internal Server Error", "Ocurrió un error inesperado.", "Error interno del servidor"),
     };
 
@@ -52,7 +53,7 @@ public class ErrorResponsesOperationFilter : IOperationFilter
         ["type"] = new OpenApiString(info.Type),
         ["title"] = new OpenApiString(info.Title),
         ["status"] = new OpenApiInteger(status),
-        ["detail"] = new OpenApiString(info.Detail),
+        ["detail"] = new OpenApiString(e.Detail ?? info.Detail),
         ["instance"] = new OpenApiString(instance),
         ["errorCode"] = new OpenApiString(e.ErrorCode),
         ["errorMessage"] = new OpenApiString(e.ErrorMessage),

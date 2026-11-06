@@ -7,6 +7,7 @@ using Products.API.Services;
 namespace Products.API.Controllers;
 
 // Gestión del catálogo de productos.
+
 [ApiController]
 [Route("api/products")]
 [Produces("application/json")]
@@ -59,7 +60,8 @@ public class ProductsController(IProductService service) : ControllerBase
     // Elimina un producto.
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ErrorResponse(404, ErrorCodes.PRD_001, "Producto no encontrado.")]
-    [ErrorResponse(409, ErrorCodes.PRD_004, "El producto tiene órdenes activas y no puede eliminarse.")]
+    [ErrorResponse(409, ErrorCodes.PRD_004, "El producto tiene órdenes activas y no puede eliminarse.",
+        Detail = "No se puede eliminar el recurso.")]
     [ErrorResponse(500, ErrorCodes.PRD_005, "Error interno al procesar el producto.")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)

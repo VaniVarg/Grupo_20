@@ -24,7 +24,7 @@ public class NotificationService(
 
         // Llamada HTTP a Users.API: el destinatario tiene que existir (NTF-001).
         if (!await usersClient.ExistsAsync(request.UsuarioId))
-            throw new NotFoundException(ErrorCodes.NTF_001, "Usuario destinatario no encontrado.");
+            throw new NotFoundException(ErrorCodes.NTF_001, "El usuario destinatario no fue encontrado.");
 
         var notification = new Notification
         {
