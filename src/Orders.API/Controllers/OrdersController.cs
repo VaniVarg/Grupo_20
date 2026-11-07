@@ -51,7 +51,7 @@ public class OrdersController(IOrderService service) : ControllerBase
     [ProducesResponseType(typeof(UpdateOrderStatusResponse), StatusCodes.Status200OK)]
     [ErrorResponse(400, ErrorCodes.ORD_002, "Estado inválido. Valores permitidos: Pendiente, Confirmada, Enviada, Entregada, Cancelada.")]
     [ErrorResponse(404, ErrorCodes.ORD_001, "Orden no encontrada.")]
-    [ErrorResponse(409, ErrorCodes.ORD_006, "Una orden en estado 'Entregada' no puede pasar a 'Pendiente'.")]
+    [ErrorResponse(409, ErrorCodes.ORD_006, "Una orden en estado 'Entregada' no puede volver a 'Pendiente'.")]
     [ErrorResponse(500, ErrorCodes.ORD_007, "Error interno al procesar la orden.")]
     [HttpPut("{id}/status")]
     public async Task<ActionResult<UpdateOrderStatusResponse>> UpdateStatus(

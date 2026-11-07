@@ -111,9 +111,14 @@ public class OrderService(
         // ORD-006: solo se permiten las transiciones definidas en OrderStatus.
         if (!OrderStatus.CanTransition(order.Estado, nuevoEstado))
         {
+            // Si el cambio va hacia atrás en el flujo (por ejemplo Entregada -> Pendiente), el mensaje
+            // dice "volver a", como en el ejemplo de la consigna; si no, "pasar a".
+            var retrocede = Array.IndexOf(OrderStatus.All, nuevoEstado) < Array.IndexOf(OrderStatus.All, order.Estado);
+            var accion = retrocede ? "volver a" : "pasar a";
+
             throw new ConflictException(
                 ErrorCodes.ORD_006,
-                $"Una orden en estado '{order.Estado}' no puede pasar a '{nuevoEstado}'.");
+                $"Una orden en estado '{order.Estado}' no puede {accion} '{nuevoEstado}'.");
         }
 
         var estadoAnterior = order.Estado;
