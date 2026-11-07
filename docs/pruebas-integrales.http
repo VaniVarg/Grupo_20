@@ -1,0 +1,238 @@
+# Pruebas integrales del sistema (extensión "REST Client" de VS Code).
+# Levantar los CINCO servicios y ejecutar los requests en orden con "Send Request".
+# Cada request guarda su respuesta con "# @name" y los siguientes la reutilizan.
+
+@users = http://localhost:5102
+@products = http://localhost:5101
+@orders = http://localhost:5103
+@cart = http://localhost:5104
+@notifications = http://localhost:5105
+
+################################################################
+# 1. FLUJO COMPLETO (todo debe salir bien)
+################################################################
+
+### 1.1 Registrar usuario -> 201 (el email lleva un timestamp para poder repetir la prueba)
+# @name usuario
+POST {{users}}/api/users/register
+Content-Type: application/json
+
+{
+  "nombre": "María",
+  "apellido": "González",
+  "email": "maria{{$timestamp}}@email.com",
+  "password": "MiPassword123!"
+}
+
+### 1.2 Login -> 200
+POST {{users}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "{{usuario.response.body.$.email}}",
+  "password": "MiPassword123!"
+}
+
+### 1.3 Crear producto con stock 10 -> 201
+# @name producto
+POST {{products}}/api/products
+Content-Type: application/json
+
+{
+  "nombre": "Notebook {{$timestamp}}",
+  "descripcion": "Laptop 15 pulgadas, 32GB RAM",
+  "precio": 1500.00,
+  "stock": 10,
+  "categoria": "Electrónica"
+}
+
+### 1.4 Agregar 2 unidades al carrito -> 200
+POST {{cart}}/api/cart/{{usuario.response.body.$.id}}/items
+Content-Type: application/json
+
+{
+  "productoId": "{{producto.response.body.$.id}}",
+  "cantidad": 2
+}
+
+### 1.5 Ver el carrito -> 200
+GET {{cart}}/api/cart/{{usuario.response.body.$.id}}
+
+### 1.6 Crear una orden -> 201, total 3000
+# @name orden
+POST {{orders}}/api/orders
+Content-Type: application/json
+
+{
+  "usuarioId": "{{usuario.response.body.$.id}}",
+  "items": [
+    { "productoId": "{{producto.response.body.$.id}}", "cantidad": 2 }
+  ]
+}
+
+### 1.7 Confirmar la orden (Pendiente -> Confirmada) -> 200
+PUT {{orders}}/api/orders/{{orden.response.body.$.id}}/status
+Content-Type: application/json
+
+{
+  "estado": "Confirmada"
+}
+
+### 1.8 Enviar una notificación -> 201
+POST {{notifications}}/api/notifications/send
+Content-Type: application/json
+
+{
+  "usuarioId": "{{usuario.response.body.$.id}}",
+  "mensaje": "Su orden fue confirmada.",
+  "tipo": "Email"
+}
+
+### 1.9 Listar las notificaciones del usuario -> 200
+GET {{notifications}}/api/notifications/{{usuario.response.body.$.id}}
+
+### 1.10 Listar las órdenes del usuario -> 200
+GET {{orders}}/api/orders?usuarioId={{usuario.response.body.$.id}}
+
+################################################################
+# 2. ERRORES (cada uno debe devolver el errorCode indicado)
+# Ejecutar después del flujo 1, porque reutilizan sus datos.
+################################################################
+
+### 2.1 Producto inexistente -> 404 PRD-001
+GET {{products}}/api/products/99
+
+### 2.2 Datos inválidos -> 400 PRD-002
+POST {{products}}/api/products
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "precio": -5,
+  "stock": 1,
+  "categoria": ""
+}
+
+### 2.3 Producto duplicado -> 409 PRD-003 (repite el 1.3 con el mismo nombre)
+POST {{products}}/api/products
+Content-Type: application/json
+
+{
+  "nombre": "{{producto.response.body.$.nombre}}",
+  "precio": 1500.00,
+  "stock": 10,
+  "categoria": "Electrónica"
+}
+
+### 2.4 Borrar un producto con una orden Confirmada -> 409 PRD-004
+DELETE {{products}}/api/products/{{producto.response.body.$.id}}
+
+### 2.5 Email repetido -> 409 USR-001
+POST {{users}}/api/users/register
+Content-Type: application/json
+
+{
+  "nombre": "María",
+  "apellido": "González",
+  "email": "{{usuario.response.body.$.email}}",
+  "password": "MiPassword123!"
+}
+
+### 2.6 Contraseña incorrecta -> 401 USR-003 (hacerlo 3 veces: el tercero da 403 USR-004)
+POST {{users}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "{{usuario.response.body.$.email}}",
+  "password": "incorrecta"
+}
+
+### 2.7 Carrito de un usuario sin carrito -> 404 CRT-001
+GET {{cart}}/api/cart/00000000-0000-0000-0000-000000000001
+
+### 2.8 Cantidad inválida -> 400 CRT-004
+POST {{cart}}/api/cart/{{usuario.response.body.$.id}}/items
+Content-Type: application/json
+
+{
+  "productoId": "{{producto.response.body.$.id}}",
+  "cantidad": 0
+}
+
+### 2.9 Más cantidad que el stock -> 422 CRT-003
+POST {{cart}}/api/cart/{{usuario.response.body.$.id}}/items
+Content-Type: application/json
+
+{
+  "productoId": "{{producto.response.body.$.id}}",
+  "cantidad": 9999
+}
+
+### 2.10 Más cantidad que el stock -> 422 ORD-005
+POST {{orders}}/api/orders
+Content-Type: application/json
+
+{
+  "usuarioId": "{{usuario.response.body.$.id}}",
+  "items": [
+    { "productoId": "{{producto.response.body.$.id}}", "cantidad": 9999 }
+  ]
+}
+
+### 2.11 Usuario inexistente al crear la orden -> 404 ORD-003
+POST {{orders}}/api/orders
+Content-Type: application/json
+
+{
+  "usuarioId": "00000000-0000-0000-0000-000000000001",
+  "items": [
+    { "productoId": "{{producto.response.body.$.id}}", "cantidad": 1 }
+  ]
+}
+
+### 2.12 Transición no permitida (Confirmada -> Entregada) -> 409 ORD-006
+PUT {{orders}}/api/orders/{{orden.response.body.$.id}}/status
+Content-Type: application/json
+
+{
+  "estado": "Entregada"
+}
+
+### 2.13 Usuario destinatario inexistente -> 404 NTF-001
+POST {{notifications}}/api/notifications/send
+Content-Type: application/json
+
+{
+  "usuarioId": "00000000-0000-0000-0000-000000000001",
+  "mensaje": "Hola",
+  "tipo": "Email"
+}
+
+### 2.14 Tipo de notificación inválido -> 400 NTF-002
+POST {{notifications}}/api/notifications/send
+Content-Type: application/json
+
+{
+  "usuarioId": "{{usuario.response.body.$.id}}",
+  "mensaje": "Hola",
+  "tipo": "Carta"
+}
+
+################################################################
+# 3. HEALTH CHECKS (los cinco servicios)
+################################################################
+
+### 3.1 Products
+GET {{products}}/health
+
+### 3.2 Users
+GET {{users}}/health
+
+### 3.3 Orders (depende de Users y Products)
+GET {{orders}}/health/ready
+
+### 3.4 Cart (depende de Products)
+GET {{cart}}/health/ready
+
+### 3.5 Notifications (depende de Users)
+GET {{notifications}}/health/ready
