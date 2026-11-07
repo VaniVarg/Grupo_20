@@ -5,7 +5,6 @@ using Products.API.Middleware;
 using Products.API.Persistence;
 using Products.API.Services;
 using Products.API.Swagger;
-using Products.API.HealthChecks;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
@@ -160,5 +159,3 @@ finally
 {
     Log.CloseAndFlush();
 }
-
-
