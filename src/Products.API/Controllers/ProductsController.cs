@@ -6,14 +6,15 @@ using Products.API.Services;
 
 namespace Products.API.Controllers;
 
-// Gestión del catálogo de productos.
-
+/// <summary>
+/// Gestión del catálogo de productos.
+/// </summary>
 [ApiController]
 [Route("api/products")]
 [Produces("application/json")]
 public class ProductsController(IProductService service) : ControllerBase
 {
-    // Lista los productos, con filtros opcionales por categoría y nombre.
+    /// <summary>Lista los productos, con filtros opcionales por categoría y nombre.</summary>
     [ProducesResponseType(typeof(IEnumerable<ProductResponse>), StatusCodes.Status200OK)]
     [ErrorResponse(500, ErrorCodes.PRD_005, "Error interno al procesar el producto.")]
     [HttpGet]
@@ -24,7 +25,7 @@ public class ProductsController(IProductService service) : ControllerBase
         return Ok(await service.GetAllAsync(categoria, nombre));
     }
 
-    // Obtiene un producto por su ID.
+    /// <summary>Obtiene un producto por su ID.</summary>
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ErrorResponse(404, ErrorCodes.PRD_001, "Producto no encontrado.")]
     [ErrorResponse(500, ErrorCodes.PRD_005, "Error interno al procesar el producto.")]
@@ -34,7 +35,7 @@ public class ProductsController(IProductService service) : ControllerBase
         return Ok(await service.GetByIdAsync(id));
     }
 
-    // Crea un nuevo producto.
+    /// <summary>Crea un nuevo producto.</summary>
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status201Created)]
     [ErrorResponse(400, ErrorCodes.PRD_002, "Los datos del producto son inválidos. El precio debe ser mayor a 0.")]
     [ErrorResponse(409, ErrorCodes.PRD_003, "Ya existe un producto con ese nombre en la categoría 'Electrónica'.")]
@@ -46,7 +47,7 @@ public class ProductsController(IProductService service) : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
-    // Actualiza un producto existente.
+    /// <summary>Actualiza un producto existente.</summary>
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ErrorResponse(400, ErrorCodes.PRD_002, "Los datos del producto son inválidos. El precio debe ser mayor a 0.")]
     [ErrorResponse(404, ErrorCodes.PRD_001, "Producto no encontrado.")]
@@ -57,7 +58,7 @@ public class ProductsController(IProductService service) : ControllerBase
         return Ok(await service.UpdateAsync(id, request));
     }
 
-    // Elimina un producto.
+    /// <summary>Elimina un producto.</summary>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ErrorResponse(404, ErrorCodes.PRD_001, "Producto no encontrado.")]
     [ErrorResponse(409, ErrorCodes.PRD_004, "El producto tiene órdenes activas y no puede eliminarse.",
